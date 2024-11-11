@@ -152,3 +152,6 @@ const styles = StyleSheet.create({
 });
 
 export default Perros;
+
+
+

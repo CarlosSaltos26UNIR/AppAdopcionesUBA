@@ -83,7 +83,7 @@ const GatosDetalle = ({ route, navigation }) => {
           <Pressable
             style={styles.btnAplicar}
             onPress={() => {
-              navigation.navigate('Solicitud');
+              navigation.navigate('Solicitud', { mascota: selectedDog.nombre });
             }}>
             <Image
               style={styles.botonAplicar}

@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ImageBackground, Image } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, Image, Pressable } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-const Confirmacion = () => {
+const Confirmacion = ({ navigation }) => {
   return (
     <View style={styles.container}>
 
@@ -29,6 +29,18 @@ const Confirmacion = () => {
         Te llegará un correo con las indicaciones para completar el proceso de
         adopción
       </Text>
+
+      <Pressable
+        style={styles.btnHome}
+        onPress={() => {
+          navigation.navigate('Home');
+        }}>
+        <Image
+          style={styles.botonHome}
+          source={require('../assets/homeIcon.png')}
+          resizeMode="contain"
+        />
+      </Pressable>
 
 
       <StatusBar style="auto" />
@@ -59,7 +71,7 @@ const styles = StyleSheet.create({
 
   logoMunicipio: {
     position: 'absolute',
-    top: hp(64),
+    top: hp(58),
     width: wp(55),
     height: hp(55),
   },
@@ -86,6 +98,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '800',
     bottom: hp(28),
+  },
+
+  botonHome: {
+    // backgroundColor: 'red',
+    width: 45,
+    height: 45,
+  },
+
+  btnHome: {
+    position: 'absolute',
+    // backgroundColor: 'orange',
+    bottom: hp(3),
   },
 
 });

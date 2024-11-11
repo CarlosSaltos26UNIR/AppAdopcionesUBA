@@ -20,7 +20,8 @@ const Stack = createStackNavigator();
 
 function App() {
   return (
-    <Stack.Navigator initialRouteName="Confirmacion">
+    <Stack.Navigator initialRouteName="Pantalla1">
+      <Stack.Screen name="Solicitud" component={Solicitud} options={{ headerShown: false }} />
       <Stack.Screen name="Pantalla1" component={Pantalla1} options={{ headerShown: false }} />
       <Stack.Screen name="Pantalla2" component={Pantalla2} options={{ headerShown: false }} />
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
@@ -28,7 +29,6 @@ function App() {
       <Stack.Screen name="Perros" component={Perros} options={{ headerShown: false }} />
       <Stack.Screen name="GatosDetalle" component={GatosDetalle} options={{ headerShown: false }} />
       <Stack.Screen name="PerrosDetalle" component={PerrosDetalle} options={{ headerShown: false }} />
-      <Stack.Screen name="Solicitud" component={Solicitud} options={{ headerShown: false }} />
       <Stack.Screen name="Confirmacion" component={Confirmacion} options={{ headerShown: false }} />
       <Stack.Screen name="GuiaAdoptante" component={GuiaAdoptante} options={{ headerShown: false }} />
       <Stack.Screen name="GuiaAdoptante2" component={GuiaAdoptante2} options={{ headerShown: false }} />
@@ -49,3 +49,7 @@ export default () => {
     </SafeAreaView>
   )
 }
+
+
+
+

@@ -1,9 +1,13 @@
+import { send, EmailJSResponseStatus } from '@emailjs/react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { StyleSheet, Text, View, ImageBackground, Image, TextInput, Pressable, KeyboardAvoidingView, ScrollView, Platform, Alert } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-const Solicitud = ({ navigation }) => {
+
+
+const Solicitud = ({ route, navigation }) => {
+  const { mascota } = route.params
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
   const [telefono, setTelefono] = useState('');
@@ -33,34 +37,65 @@ const Solicitud = ({ navigation }) => {
   };
 
   // Función para enviar los datos
+  const name = `${nombre} ${apellido}`
+  const onSubmit = async () => {
+    try {
+      await send(
+        'service_6ywx0jr', //Service_id
+        'template_xzipjyb', // Template_id
+        {
+          from_name: name,
+          email: correo,
+          telefono,
+          message: 'Solicitud de adopción nueva',
+          mascota: mascota
+        },
+        {
+          publicKey: 'csMAGnG6jpRzVxz3y', //Public key
+          // privateKey: 'cpLlyesT5O3I7pYkFOwk8'
+        },
+      );
+
+      console.log('SUCCESS!');
+      navigation.navigate('Confirmacion');
+    } catch (err) {
+      if (err instanceof EmailJSResponseStatus) {
+        console.log('EmailJS Request Failed...', err);
+      }
+
+
+      console.log('ERROR', err);
+    }
+  };
   const enviarSolicitud = async () => {
     console.log('enviado');
     if (!validateFields()) return;
 
-    try {
-      const response = await fetch('https://tu-api.com/enviar-correo', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          nombre,
-          apellido,
-          telefono,
-          correo,
-        }),
-      });
+    onSubmit();
+    // try {
+    //   const response = await fetch('https://tu-api.com/enviar-correo', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //       nombre,
+    //       apellido,
+    //       telefono,
+    //       correo,
+    //     }),
+    //   });
 
-      if (response.ok) {
-        Alert.alert('Éxito', 'Tu solicitud ha sido enviada.');
-        navigation.navigate('Confirmacion');
-      } else {
-        Alert.alert('Error', 'Hubo un problema al enviar tu solicitud.');
-      }
-    } catch (error) {
-      console.error(error);
-      Alert.alert('Error', 'Hubo un problema al conectar con el servidor.');
-    }
+    //   if (response.ok) {
+    //     Alert.alert('Éxito', 'Tu solicitud ha sido enviada.');
+    //     navigation.navigate('Confirmacion');
+    //   } else {
+    //     Alert.alert('Error', 'Hubo un problema al enviar tu solicitud.');
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    //   Alert.alert('Error', 'Hubo un problema al conectar con el servidor.');
+    // }
   };
 
   return (
@@ -175,3 +210,7 @@ const styles = StyleSheet.create({
 });
 
 export default Solicitud;
+
+
+
+
